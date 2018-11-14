@@ -1,4 +1,5 @@
 from flask import Flask
+import datetime
 from Cliente import Cliente
 from Vendedor import Vendedor
 from Frequencia import Frequencia
@@ -111,7 +112,7 @@ def is_dia_rota(frequencia):
     total_dias = get_total_dias_frequencia(frequencia.data_inicial)
 
     if frequencia.periodicidade == 'S':
-        if dia_semana == get_dia_semana_semanal(frequencia.frequencia_visita):
+        if dia_semana == get_dia_semana_visita(frequencia.frequencia_visita):
             return True
 
     if frequencia.periodicidade == 'Q':
@@ -135,17 +136,23 @@ def get_frequencia_cliente(cliente):
 
 
 def get_dia_semana():
-    # (1-segunda à 7-domingo)
-    return 1
+    data_atual = datetime.datetime.now()
+    dia_semana = int(data_atual.strftime("%w"))
+    return dia_semana if dia_semana > 0 else dia_semana + 1
 
 
-def get_dia_semana_semanal(frequencia_visita):
-    return 1
+def get_dia_semana_visita(frequencia_visita):
+    #verificar dia da semana da ferequencia
+    data_atual = datetime.datetime(2018, 11, 18)
+    dia_semana = int(data_atual.strftime("%w"))
+    return dia_semana if dia_semana > 0 else dia_semana + 1
 
 
 def get_total_dias_frequencia(data_inicial):
-    # quantidade de dias corridos desde a primeira visita
-    return 56
+    data_inicial = '2018-11-10'
+    date_time_obj = datetime.datetime.strptime(data_inicial + ' 00:00:00.000000', '%Y-%m-%d %H:%M:%S.%f')
+    data_atual = datetime.datetime.now()
+    return data_atual.date() - date_time_obj.date()
 
 
 if __name__ == '__main__':

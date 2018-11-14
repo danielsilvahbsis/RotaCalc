@@ -6,4 +6,4 @@ class Rota:
         self.origem = origem
 
     def __str__(self):
-        return str(self.unb) + str(self.vendedor) + str(self.cliente) + str(self.origem)
+        return 'Unb: ' + str(self.unb) + ' Vendedor: ' + str(self.vendedor) + " Cliente: " + str(self.cliente) + " Origem: " + str(self.origem)
